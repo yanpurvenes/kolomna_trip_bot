@@ -29,8 +29,10 @@
             justify-content: center;
             text-align: center;
             color: white;
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.9), rgba(118, 75, 162, 0.9)), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><pattern id="castle" patternUnits="userSpaceOnUse" width="100" height="100"><rect width="100" height="100" fill="rgba(255,255,255,0.05)"/><polygon points="20,80 40,80 40,60 60,60 60,80 80,80 80,20 20,20" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="1000" height="1000" fill="url(%23castle)"/></svg>');
+            /* ИЗМЕНЕНИЕ: Добавлено фото Коломны на фон */
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.85), rgba(118, 75, 162, 0.85)), url('https://static.tildacdn.com/tild3163-3432-4135-b033-643232323264/451A2218.jpg');
             background-size: cover;
+            background-position: center;
         }
         
         .hero::before {
@@ -240,7 +242,8 @@
     <div class="hero">
         <div class="hero-content">
             <h1>🏰 Коломна ждёт нас!</h1>
-            <p class="subtitle">Средневековые крепости, музей пастилы и незабываемые впечатления!</p>
+            <p class="subtitle">Средневековые крепости, музей пастилы и незабываемые впечатления</p>
+            <!-- ИЗМЕНЕНИЕ: Ссылка проверена -->
             <a href="https://t.me/yanpurvenes" class="cta-button" target="_blank">Поехали с нами! 🚂</a>
         </div>
     </div>
@@ -309,8 +312,10 @@
         Входы в музеи от 100-300₽<br>
         Незабываемые впечатления - бесценно!</p>
         
-        <a href="tel:+7" class="join-button" id="callBtn">📞 Звони!</a>
-        <a href="https://t.me/" class="join-button" id="telegramBtn">💬 Пиши в Telegram</a>
+        <!-- ИЗМЕНЕНИЕ: Кнопка звонка удалена -->
+        <!-- ИЗМЕНЕНИЕ: Ссылка в кнопке "Пиши в Telegram" обновлена -->
+        <a href="https://t.me/yanpurvenes" class="join-button" id="telegramBtn">💬 Пиши в Telegram</a>
+        <!-- ИЗМЕНЕНИЕ: Добавлена логика для кнопки "Я еду!" -->
         <button class="join-button" id="joinBtn" style="background: rgba(255,255,255,0.3); border: 2px solid rgba(255,255,255,0.5); color: white; cursor: pointer;">✅ Я еду!</button>
     </div>
     
@@ -318,22 +323,11 @@
         // Инициализация Telegram Web App
         let tg = window.Telegram.WebApp;
         
-        // Показать кнопку "Закрыть" в Telegram
         tg.ready();
         tg.expand();
         
         // Установить цвета темы
         document.body.style.backgroundColor = tg.themeParams.bg_color || '#667eea';
-        
-        // Плавная прокрутка для внутренних ссылок
-        document.addEventListener('click', function(e) {
-            if (e.target.classList.contains('scroll-to-details')) {
-                e.preventDefault();
-                document.querySelector('#details').scrollIntoView({
-                    behavior: 'smooth'
-                });
-            }
-        });
         
         // Обработка вибрации на мобильных устройствах
         document.querySelectorAll('.join-button, .cta-button').forEach(btn => {
@@ -343,6 +337,18 @@
                 }
             });
         });
+
+        // ИЗМЕНЕНИЕ: Новая логика для кнопки "Я еду!"
+        document.getElementById('joinBtn').addEventListener('click', function() {
+            const text = 'я в деле';
+            // URL-кодирование текста для передачи в ссылке
+            const encodedText = encodeURIComponent(text);
+            const url = `https://t.me/yanpurvenes?text=${encodedText}`;
+            
+            // Используем встроенный метод Telegram для открытия ссылок
+            tg.openTelegramLink(url);
+        });
+
     </script>
 </body>
 </html>
